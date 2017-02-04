@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExtraLinq
 {
@@ -26,5 +27,7 @@ namespace ExtraLinq
                 else
                     enumerator.Reset();
         }
+        private static void ArgumentNullCheck(object arg, string argName)
+        { if (arg == null) throw new ArgumentNullException(argName); }
     }
 }

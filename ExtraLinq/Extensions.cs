@@ -46,6 +46,22 @@ namespace ExtraLinq
             return true;
         }
 
+        public static bool AllDuplicate<T>(this IEnumerable<T> objects) =>
+            AllDuplicate(objects, null);
+
+        public static bool AllDuplicate<T>(this IEnumerable<T> objects, IEqualityComparer<T> comparer)
+        {
+            ArgumentNullCheck(objects, "objects");
+
+            var set = new HashSet<T>(comparer);
+
+            foreach (var obj in objects)
+                if (set.Add(obj) && set.Count > 1)
+                    return false;
+
+            return true;
+        }
+
         private static void ArgumentNullCheck(object arg, string argName)
         { if (arg == null) throw new ArgumentNullException(argName); }
     }

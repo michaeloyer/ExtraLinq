@@ -15,5 +15,16 @@ namespace ExtraLinq
 
         public static Stack<T> ToStack<T>(this IEnumerable<T> values) =>
             new Stack<T>(values);
+
+        public static IEnumerable<T> ToCycle<T>(this IEnumerable<T> items)
+        {
+            var enumerator = items.GetEnumerator();
+
+            while (true)
+                if (enumerator.MoveNext())
+                    yield return enumerator.Current;
+                else
+                    enumerator.Reset();
+        }
     }
 }

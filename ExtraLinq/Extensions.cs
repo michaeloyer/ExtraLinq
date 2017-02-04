@@ -19,6 +19,8 @@ namespace ExtraLinq
 
         public static IEnumerable<T> ToCycle<T>(this IEnumerable<T> items)
         {
+            ArgumentNullCheck(items, "items");
+
             var enumerator = items.GetEnumerator();
 
             while (true)

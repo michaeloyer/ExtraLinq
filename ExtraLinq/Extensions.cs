@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace ExtraLinq
@@ -60,6 +61,51 @@ namespace ExtraLinq
                     return false;
 
             return true;
+        }
+
+        public static IEnumerable<object> NotOfType<T>(this IEnumerable source)
+        {
+            ArgumentNullCheck(source, "source");
+
+            foreach (object obj in source)
+                if (!(obj is T))
+                    yield return obj;
+        }
+
+        public static IEnumerable<object> NotOfType<T1, T2>(this IEnumerable source)
+        {
+            ArgumentNullCheck(source, "source");
+
+            foreach (object obj in source)
+                if (!(obj is T1 || obj is T2))
+                    yield return obj;
+        }
+
+        public static IEnumerable<object> NotOfType<T1, T2, T3>(this IEnumerable source)
+        {
+            ArgumentNullCheck(source, "source");
+
+            foreach (object obj in source)
+                if (!(obj is T1 || obj is T2 || obj is T3))
+                    yield return obj;
+        }
+
+        public static IEnumerable<object> NotOfType<T1, T2, T3, T4>(this IEnumerable source)
+        {
+            ArgumentNullCheck(source, "source");
+
+            foreach (object obj in source)
+                if (!(obj is T1 || obj is T2 || obj is T3 || obj is T4))
+                    yield return obj;
+        }
+
+        public static IEnumerable<object> NotOfType<T1, T2, T3, T4, T5>(this IEnumerable source)
+        {
+            ArgumentNullCheck(source, "source");
+
+            foreach (object obj in source)
+                if (!(obj is T1 || obj is T2 || obj is T3 || obj is T4 || obj is T5))
+                    yield return obj;
         }
 
         private static void ArgumentNullCheck(object arg, string argName)

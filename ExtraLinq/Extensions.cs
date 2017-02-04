@@ -63,6 +63,18 @@ namespace ExtraLinq
             return true;
         }
 
+        public static IEnumerable<TResult> Permutations<TSource1, TSource2, TResult>(this IEnumerable<TSource1> collection1,
+            IEnumerable<TSource2> collection2, Func<TSource1, TSource2, TResult> selector)
+        {
+            ArgumentNullCheck(collection1, "collection1");
+            ArgumentNullCheck(collection2, "collection2");
+            ArgumentNullCheck(selector, "selector");
+
+            foreach (var item1 in collection1)
+                foreach (var item2 in collection2)
+                    yield return selector(item1, item2);
+        }
+
         public static IEnumerable<object> NotOfType<T>(this IEnumerable source)
         {
             ArgumentNullCheck(source, "source");

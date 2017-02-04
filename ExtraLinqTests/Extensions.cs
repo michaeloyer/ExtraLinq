@@ -67,5 +67,18 @@ namespace ExtraLinqTests
             var sequence = new[] { "a", "A", "a", "a" };
             Assert.True(sequence.AllDuplicate(StringComparer.CurrentCultureIgnoreCase));
         }
+
+        [Test]
+        public static void Permutations()
+        {
+            var collection1 = new[] { 'a', 'b', 'c' };
+            var collection2 = new[] { 1, 2, 3 };
+            Func<char, int, string> selector = (i1, i2) => i1.ToString() + i2.ToString();
+
+            var result = collection1.Permutations(collection2, selector);
+            var expected = new[] { "a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3" };
+
+            Assert.True(Enumerable.SequenceEqual(result, expected));
+        }
     }
 }

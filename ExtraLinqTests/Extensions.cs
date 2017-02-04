@@ -80,5 +80,14 @@ namespace ExtraLinqTests
 
             Assert.True(Enumerable.SequenceEqual(result, expected));
         }
+
+        [TestCase(",", 1,2,3,4, ExpectedResult = "1,2,3,4")]
+        [TestCase("~", 1,2,3,4, ExpectedResult = "1~2~3~4")]
+        [TestCase("", 1,2,3,4, ExpectedResult = "1234")]
+        [TestCase(null, 1,2,3,4, ExpectedResult = "1234")]
+        public static string StringJoin(string delimiter, params object[] objects)
+        {
+            return objects.StringJoin(delimiter);
+        }
     }
 }

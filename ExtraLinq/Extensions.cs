@@ -75,6 +75,12 @@ namespace ExtraLinq
                     yield return selector(item1, item2);
         }
 
+        public static string StringJoin<T>(this IEnumerable<T> collection, string delimiter)
+        {
+            ArgumentNullCheck(collection, "collection");
+            return string.Join(delimiter, collection);
+        }
+
         public static IEnumerable<object> NotOfType<T>(this IEnumerable source)
         {
             ArgumentNullCheck(source, "source");

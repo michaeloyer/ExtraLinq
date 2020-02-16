@@ -1,14 +1,13 @@
 ﻿using ExtraLinq;
-using NUnit.Framework;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace ExtraLinqTests
 {
-    [TestFixture]
     public class Extensions
     {
-        [Test]
+        [Fact]
         public static void CycleRepeatsNumbers()
         {
             var array = new[] { 1, 2, 3, 4 };
@@ -16,59 +15,59 @@ namespace ExtraLinqTests
             var expected = new[] { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2 };
             var result = array.ToCycle().Take(take);
 
-            Assert.True(Enumerable.SequenceEqual(result, result));
+            Assert.True(Enumerable.SequenceEqual(expected, result));
         }
 
-        [Test]
+        [Fact]
         public static void AllUnique_WhenSequenceAllUnique_ReturnTrue()
         {
             var sequence = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             Assert.True(sequence.AllUnique());
         }
 
-        [Test]
+        [Fact]
         public static void AllUnique_WhenSequenceNotUnique_ReturnFalse()
         {
             var sequence = new[] { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 };
             Assert.False(sequence.AllUnique());
         }
 
-        [Test]
+        [Fact]
         public static void AllUnique_WhenStringSequenceAllUniqueExceptCasingAndUsingIgnoreCaseComparer_ReturnTrue()
         {
             var sequence = new[] { "a", "b", "c", "A", "B", "C" };
             Assert.True(sequence.AllUnique(StringComparer.CurrentCulture));
         }
 
-        [Test]
+        [Fact]
         public static void AllUnique_WhenSequenceAllUniqueExceptCasingAndUsingNonIgnoreCaseComparer_ReturnFalse()
         {
-            var sequence = new[] { "a", "b", "c", "A", "B", "C"};
+            var sequence = new[] { "a", "b", "c", "A", "B", "C" };
             Assert.False(sequence.AllUnique(StringComparer.CurrentCultureIgnoreCase));
         }
 
-        [Test]
+        [Fact]
         public static void AllDuplicate_WhenSequenceAllDuplicate_ReturnTrue()
         {
             var sequence = new[] { 1, 1, 1, 1, 1, 1 };
             Assert.True(sequence.AllDuplicate());
         }
 
-        [Test]
+        [Fact]
         public static void AllDuplicate_WhenSequenceNotDuplicate_ReturnFalse()
         {
             var sequence = new[] { 1, 2, 1, 1, 1 };
             Assert.False(sequence.AllDuplicate());
         }
 
-        [Test]
+        [Fact]
         public static void AllDuplicate_WhenStringSequenceAllDuplicateExceptCasingAndUsingIgnoreCaseComparer_ReturnTrue()
         {
             var sequence = new[] { "a", "A", "a", "a" };
             Assert.True(sequence.AllDuplicate(StringComparer.CurrentCultureIgnoreCase));
         }
 
-        [Test]
+        [Fact]
         public static void Permutations()
         {
             var collection1 = new[] { 'a', 'b', 'c' };
@@ -81,13 +80,14 @@ namespace ExtraLinqTests
             Assert.True(Enumerable.SequenceEqual(result, expected));
         }
 
-        [TestCase(",", 1,2,3,4, ExpectedResult = "1,2,3,4")]
-        [TestCase("~", 1,2,3,4, ExpectedResult = "1~2~3~4")]
-        [TestCase("", 1,2,3,4, ExpectedResult = "1234")]
-        [TestCase(null, 1,2,3,4, ExpectedResult = "1234")]
-        public static string StringJoin(string delimiter, params object[] objects)
+        [Theory]
+        [InlineData(",", new[] { 1, 2, 3, 4 }, "1,2,3,4")]
+        [InlineData("~", new[] { 1, 2, 3, 4, }, "1~2~3~4")]
+        [InlineData("", new[] { 1, 2, 3, 4, }, "1234")]
+        [InlineData(null, new[] { 1, 2, 3, 4, }, "1234")]
+        public static void StringJoin(string delimiter, int[] array, string expected)
         {
-            return objects.StringJoin(delimiter);
+            Assert.Equal(expected, array.StringJoin(delimiter));
         }
     }
 }

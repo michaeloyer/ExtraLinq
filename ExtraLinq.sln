@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraLinq", "ExtraLinq\ExtraLinq.csproj", "{DABF0EFF-3058-4644-B921-ACE628951896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtraLinq", "ExtraLinq\ExtraLinq.csproj", "{DABF0EFF-3058-4644-B921-ACE628951896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraLinqTests", "ExtraLinqTests\ExtraLinqTests.csproj", "{3381C4C6-122B-4A35-B4B6-69910C692162}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtraLinqTests", "ExtraLinqTests\ExtraLinqTests.csproj", "{3381C4C6-122B-4A35-B4B6-69910C692162}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67CDB9FE-0055-4C57-B3CC-1A435A23AA36}
 	EndGlobalSection
 EndGlobal

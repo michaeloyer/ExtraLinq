@@ -89,5 +89,89 @@ namespace ExtraLinqTests
         {
             Assert.Equal(expected, array.StringJoin(delimiter));
         }
+
+        [Fact]
+        public static void IntersectBy_RemovesDuplicatesFromCompareWithAndSelfBasedOnKey_SameTypes()
+        {
+            var source = new[]
+            {
+                new
+                {
+                    ID = 1,
+                    Name = "Test"
+                },
+                new
+                {
+                    ID = 2,
+                    Name = "Tester2"
+                },
+                new
+                {
+                    ID = 1,
+                    Name = "Tester10"
+                }
+            };
+
+            var compareWith = new[]
+            {
+                new
+                {
+                    ID = 1,
+                    Name = "Tester12"
+                },
+                new
+                {
+                    ID = 3,
+                    Name = "Tester17"
+                }
+            };
+
+            var intersected = source.IntersectBy(compareWith, a => a.ID).ToArray();
+
+            Assert.Single(intersected);
+            Assert.Equal(intersected[0], new { ID = 1, Name = "Test" });
+        }
+
+        [Fact]
+        public static void IntersectBy_RemovesDuplicatesFromCompareWithAndSelfBasedOnKey_DiverseTypes()
+        {
+            var source = new[]
+            {
+                new
+                {
+                    ID = 1,
+                    Name = "Test"
+                },
+                new
+                {
+                    ID = 2,
+                    Name = "Tester2"
+                },
+                new
+                {
+                    ID = 1,
+                    Name = "Tester10"
+                }
+            };
+
+            var compareWith = new[]
+            {
+                new
+                {
+                    theID = 1,
+                    Number=  10,
+                },
+                new
+                {
+                    theID = 3,
+                    Number = 17
+                }
+            };
+
+            var intersected = source.IntersectBy(compareWith, a => a.ID, a => a.theID).ToArray();
+
+            Assert.Single(intersected);
+            Assert.Equal(intersected[0], new { ID = 1, Name = "Test" });
+        }
     }
 }

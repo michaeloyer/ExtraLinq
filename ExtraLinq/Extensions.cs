@@ -126,6 +126,72 @@ namespace ExtraLinq
                     yield return obj;
         }
 
+        public static IEnumerable<T> IntersectBy<T, TKey>(
+            this IEnumerable<T> source,
+            IEnumerable<T> compareWith,
+            Func<T, TKey> keySelector) =>
+                IntersectBy(source, compareWith, keySelector, keySelector, (source, compareWith) => source, null);
+
+        public static IEnumerable<T> IntersectBy<T, TKey>(
+            this IEnumerable<T> source,
+            IEnumerable<T> compareWith,
+            Func<T, TKey> keySelector,
+            IEqualityComparer<TKey> comparer) =>
+                IntersectBy(source, compareWith, keySelector, keySelector, (source, compareWith) => source, comparer);
+
+        public static IEnumerable<TSource> IntersectBy<TSource, TCompareWith, TKey>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TCompareWith> compareWith,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TCompareWith, TKey> compareWithKeySelector) =>
+                IntersectBy(source, compareWith, sourceKeySelector, compareWithKeySelector, (source, compareWith) => source, null);
+
+        public static IEnumerable<TSource> IntersectBy<TSource, TCompareWith, TKey>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TCompareWith> compareWith,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TCompareWith, TKey> compareWithKeySelector,
+            IEqualityComparer<TKey> comparer) =>
+                IntersectBy(source, compareWith, sourceKeySelector, compareWithKeySelector, (source, compareWith) => source, comparer);
+
+        public static IEnumerable<TResult> IntersectBy<TSource, TCompareWith, TKey, TResult>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TCompareWith> compareWith,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TCompareWith, TKey> compareWithKeySelector,
+            Func<TSource, TCompareWith, TResult> resultSelector) =>
+                IntersectBy(source, compareWith, sourceKeySelector, compareWithKeySelector, resultSelector, null);
+
+        public static IEnumerable<TResult> IntersectBy<TSource, TCompareWith, TKey, TResult>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TCompareWith> compareWith,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TCompareWith, TKey> compareWithKeySelector,
+            Func<TSource, TCompareWith, TResult> resultSelector,
+            IEqualityComparer<TKey> comparer)
+        {
+            ArgumentNullCheck(source, nameof(source));
+            ArgumentNullCheck(compareWith, nameof(compareWith));
+            ArgumentNullCheck(sourceKeySelector, nameof(sourceKeySelector));
+            ArgumentNullCheck(compareWithKeySelector, nameof(compareWithKeySelector));
+            ArgumentNullCheck(resultSelector, nameof(resultSelector));
+
+            var sourceDict = new Dictionary<TKey, TSource>(comparer);
+
+            foreach (var sourceItem in source)
+                sourceDict.TryAdd(sourceKeySelector(sourceItem), sourceItem);
+
+            foreach (var compareWithItem in compareWith)
+            {
+                TKey key = compareWithKeySelector(compareWithItem);
+                if (sourceDict.TryGetValue(key, out var sourceItem))
+                {
+                    yield return resultSelector(sourceItem, compareWithItem);
+                    sourceDict.Remove(key);
+                }
+            }
+        }
+
         private static void ArgumentNullCheck(object arg, string argName)
         { if (arg == null) throw new ArgumentNullException(argName); }
     }

@@ -20,7 +20,7 @@ namespace ExtraLinq
 
         public static IEnumerable<T> ToCycle<T>(this IEnumerable<T> items)
         {
-            ArgumentNullCheck(items, "items");
+            ArgumentNullCheck(items, nameof(items));
 
             var enumerator = items.GetEnumerator();
 
@@ -36,7 +36,7 @@ namespace ExtraLinq
 
         public static bool AllUnique<T>(this IEnumerable<T> objects, IEqualityComparer<T> comparer)
         {
-            ArgumentNullCheck(objects, "objects");
+            ArgumentNullCheck(objects, nameof(objects));
 
             var set = new HashSet<T>(comparer);
 
@@ -52,7 +52,7 @@ namespace ExtraLinq
 
         public static bool AllDuplicate<T>(this IEnumerable<T> objects, IEqualityComparer<T> comparer)
         {
-            ArgumentNullCheck(objects, "objects");
+            ArgumentNullCheck(objects, nameof(objects));
 
             var set = new HashSet<T>(comparer);
 
@@ -66,9 +66,9 @@ namespace ExtraLinq
         public static IEnumerable<TResult> Permutations<TSource1, TSource2, TResult>(this IEnumerable<TSource1> collection1,
             IEnumerable<TSource2> collection2, Func<TSource1, TSource2, TResult> selector)
         {
-            ArgumentNullCheck(collection1, "collection1");
-            ArgumentNullCheck(collection2, "collection2");
-            ArgumentNullCheck(selector, "selector");
+            ArgumentNullCheck(collection1, nameof(collection1));
+            ArgumentNullCheck(collection2, nameof(collection2));
+            ArgumentNullCheck(selector, nameof(selector));
 
             foreach (var item1 in collection1)
                 foreach (var item2 in collection2)
@@ -77,13 +77,13 @@ namespace ExtraLinq
 
         public static string StringJoin<T>(this IEnumerable<T> collection, string delimiter)
         {
-            ArgumentNullCheck(collection, "collection");
+            ArgumentNullCheck(collection, nameof(collection));
             return string.Join(delimiter, collection);
         }
 
         public static IEnumerable<object> NotOfType<T>(this IEnumerable source)
         {
-            ArgumentNullCheck(source, "source");
+            ArgumentNullCheck(source, nameof(source));
 
             foreach (object obj in source)
                 if (!(obj is T))
@@ -92,7 +92,7 @@ namespace ExtraLinq
 
         public static IEnumerable<object> NotOfType<T1, T2>(this IEnumerable source)
         {
-            ArgumentNullCheck(source, "source");
+            ArgumentNullCheck(source, nameof(source));
 
             foreach (object obj in source)
                 if (!(obj is T1 || obj is T2))
@@ -101,7 +101,7 @@ namespace ExtraLinq
 
         public static IEnumerable<object> NotOfType<T1, T2, T3>(this IEnumerable source)
         {
-            ArgumentNullCheck(source, "source");
+            ArgumentNullCheck(source, nameof(source));
 
             foreach (object obj in source)
                 if (!(obj is T1 || obj is T2 || obj is T3))
@@ -110,7 +110,7 @@ namespace ExtraLinq
 
         public static IEnumerable<object> NotOfType<T1, T2, T3, T4>(this IEnumerable source)
         {
-            ArgumentNullCheck(source, "source");
+            ArgumentNullCheck(source, nameof(source));
 
             foreach (object obj in source)
                 if (!(obj is T1 || obj is T2 || obj is T3 || obj is T4))
@@ -119,7 +119,7 @@ namespace ExtraLinq
 
         public static IEnumerable<object> NotOfType<T1, T2, T3, T4, T5>(this IEnumerable source)
         {
-            ArgumentNullCheck(source, "source");
+            ArgumentNullCheck(source, nameof(source));
 
             foreach (object obj in source)
                 if (!(obj is T1 || obj is T2 || obj is T3 || obj is T4 || obj is T5))
